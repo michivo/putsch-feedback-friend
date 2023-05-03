@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <title>Putsch Feedbackfreund</title>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <link rel="stylesheet" type="text/css" href="./blink.css">
+</head>
+
+<body>
+    <div class="container">
+        <div id="players">
+            <div id="p1">
+                <div class="stack" id="stack1"></div>
+                <div class="label">P1</div>
+            </div>
+            <div id="p2">
+                <div class="stack" id="stack2"></div>
+                <div class="label">P2</div>
+            </div>
+            <div id="p3">
+                <div class="stack" id="stack3"></div>
+                <div class="label">P3</div>
+            </div>
+            <div id="p4">
+                <div class="stack" id="stack4"></div>
+                <div class="label">P4</div>
+            </div>
+            <div id="p5">
+                <div class="stack" id="stack5"></div>
+                <div class="label">P5</div>
+            </div>
+            <div id="p6">
+                <div class="stack" id="stack6"></div>
+                <div class="label">P6</div>
+            </div>
+            <div id="p7">
+                <div class="stack" id="stack7"></div>
+                <div class="label">P7</div>
+            </div>
+            <div id="p8">
+                <div class="stack" id="stack8"></div>
+                <div class="label">P8</div>
+            </div>
+            <div id="p9">
+                <div class="stack" id="stack9"></div>
+                <div class="label">P9</div>
+            </div>
+            <div id="p10">
+                <div class="stack" id="stack10"></div>
+                <div class="label">P10</div>
+            </div>
+            <div id="p11">
+                <div class="stack" id="stack11"></div>
+                <div class="label">P11</div>
+            </div>
+            <div id="p12">
+                <div class="stack" id="stack12"></div>
+                <div class="label">P12</div>
+            </div>
+            <div id="p13">
+                <div class="stack" id="stack13"></div>
+                <div class="label">P13</div>
+            </div>
+            <div id="p14">
+                <div class="stack" id="stack14"></div>
+                <div class="label">P14</div>
+            </div>
+            <div id="p15">
+                <div class="stack" id="stack15"></div>
+                <div class="label">P15</div>
+            </div>
+            <div id="p16">
+                <div class="stack" id="stack16"></div>
+                <div class="label">P16</div>
+            </div>
+            <div id="p17">
+                <div class="stack" id="stack17"></div>
+                <div class="label">P17</div>
+            </div>
+            <div id="p18">
+                <div class="stack" id="stack18"></div>
+                <div class="label">P18</div>
+            </div>
+            <div id="p19">
+                <div class="stack" id="stack19"></div>
+                <div class="label">P19</div>
+            </div>
+            <div id="p20">
+                <div class="stack" id="stack20"></div>
+                <div class="label">P20</div>
+            </div>
+            <div id="p21">
+                <div class="stack" id="stack21"></div>
+                <div class="label">P21</div>
+            </div>
+            <div id="p22">
+                <div class="stack" id="stack22"></div>
+                <div class="label">P22</div>
+            </div>
+            <div id="p23">
+                <div class="stack" id="stack23"></div>
+                <div class="label">P23</div>
+            </div>
+            <div id="p24">
+                <div class="stack" id="stack24"></div>
+                <div class="label">P24</div>
+            </div>
+            <div id="p25">
+                <div class="stack" id="stack25"></div>
+                <div class="label">P25</div>
+            </div>
+            <div id="p26">
+                <div class="stack" id="stack26"></div>
+                <div class="label">P26</div>
+            </div>
+            <div id="p27">
+                <div class="stack" id="stack27"></div>
+                <div class="label">P27</div>
+            </div>
+            <div id="p28">
+                <div class="stack" id="stack28"></div>
+                <div class="label">P28</div>
+            </div>
+            <div id="p29">
+                <div class="stack" id="stack29"></div>
+                <div class="label">P29</div>
+            </div>
+            <div id="p30">
+                <div class="stack" id="stack30"></div>
+                <div class="label">P30</div>
+            </div>
+        </div>
+        <div id="eyes">
+            <div class="eye">
+                <div class="upper-pupil pupil"></div>
+                <div class="iris moving"></div>
+                <div class="lower-pupil pupil"></div>
+            </div>
+            <div class="eye">
+                <div class="upper-pupil pupil"></div>
+                <div class="iris moving"></div>
+                <div class="lower-pupil pupil"></div>
+            </div>
+            <input oninput="onScan()" onfocusout="refocus()" type="text" id="scanInput">
+        </div>
+        <div id="messages">
+            Scanne dich!
+        </div>
+    </div>
+
+    <script>
+        let timer;
+        let updateTimer;
+
+        function debounce(func, timeout = 1000) {
+            return (...args) => {
+                clearTimeout(timer);
+                timer = setTimeout(() => { func.apply(this, args); }, timeout);
+            };
+        }
+
+        function updateMessage() {
+            const scanInput = document.getElementById('scanInput');
+            const playerId = scanInput.value;
+            if (playerId) {
+                if (updateTimer) {
+                    clearTimeout(updateTimer);
+                }
+                toggleAnimations();
+                const messages = document.getElementById('messages');
+                messages.innerText = `Hallo ${playerId}!`;
+                updateTimer = setTimeout(() => {
+                    messages.innerText = 'Vielen Dank für dein Feedback!';
+                    updateTimer = setTimeout(() => {
+                        messages.innerText = 'Scanne dich!';
+                    }, 5000);
+                    scanInput.focus();
+                }, 5000);
+                scanInput.focus();
+            }
+            scanInput.value = '';
+            scanInput.focus();
+        }
+
+        function refocus() {
+            const scanInput = document.getElementById('scanInput');
+            scanInput.focus();
+        }
+
+        function onScan() {
+            console.log(document.getElementById('scanInput').value);
+            debounce(() => updateMessage())();
+        }
+
+        function toggleAnimations() {
+            toggleClasses('pupil', 'blinking');
+            toggleClasses('iris', 'moving');
+            setTimeout(() => {
+                toggleClasses('iris', 'moving');
+            }, 8000);
+        }
+
+        function toggleClasses(targetClass, toggleClass) {
+            const elements = document.getElementsByClassName(targetClass);
+            for (const element of elements) {
+                if (element.classList.contains(toggleClass)) {
+                    element.classList.remove(toggleClass);
+                }
+                else {
+                    element.classList.add(toggleClass);
+                }
+            }
+        }
+    </script>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js'
+        import { getAuth } from 'https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js'
+        import { collection, getFirestore, getDocs, onSnapshot } from 'https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js'
+
+        const firebaseConfig = {
+            apiKey: 'AIzaSyB_68SDgjUhC0Z2kkdITPYak2jR90vKD1c',
+            authDomain: 'putsch-event-hub.firebaseapp.com',
+            projectId: 'putsch-event-hub',
+            storageBucket: 'putsch-event-hub.appspot.com',
+            messagingSenderId: '688249934864',
+            appId: '1:688249934864:web:ba5c04b3a43f108d956695'
+        };
+
+        const updateStats = (stats) => {
+            for (let i = 1; i < 31; i++) {
+                const stat = stats.find(s => s.playerId === `P${i}`);
+                const stack = document.getElementById(`stack${i}`);
+                const feedbackCount = stat ? stat.feedbackCount : 0;
+                while (stack.firstChild) {
+                    stack.removeChild(stack.lastChild);
+                }
+                for (let f = 0; f < feedbackCount; f++) {
+                    stack.appendChild(document.createElement('span'));
+                }
+            }
+            document.getElementById('scanInput').focus();
+        }
+
+        const app = initializeApp(firebaseConfig);
+        const firestore = getFirestore(app);
+
+        const feedbackStats = [];
+        const querySnapshot = await getDocs(collection(firestore, 'feedbackFriend'));
+        querySnapshot.forEach((doc) => {
+            const feedback = doc.data();
+            feedbackStats.push(feedback);
+        });
+        updateStats(feedbackStats);
+
+        onSnapshot(collection(firestore, 'feedbackFriend'), (data) => {
+            const feedbackStats = [];
+            data.docs.forEach((doc) => {
+                console.log(doc);
+                const feedback = doc.data();
+                feedbackStats.push(feedback);
+            });
+            updateStats(feedbackStats);
+        });
+
+        document.getElementById('scanInput').focus();
+    </script>
+</body>
+
+</html>

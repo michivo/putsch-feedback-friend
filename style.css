@@ -1,0 +1,69 @@
+body {
+	height: 100vh;
+	width: 100vw;
+	margin: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+div.container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#players {
+    height: 15%;
+    border-bottom: 2px solid #333;
+    display: flex;
+    flex-direction: row;
+}
+
+#players > div {
+    width: 3.3%;
+    border-right: 1px solid gray;
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-size: 2rem;
+    text-align: center;
+    border-top: 1px solid #888;
+}
+
+.stack {
+    height: 70%;
+    font-size: 2rem;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    padding-bottom: .1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.stack > span {
+    border-bottom: 3px solid #333;
+    height: 3px;
+    display: block;
+    border-radius: 1px;
+}
+
+#messages {
+    height: 15%;
+    font-size: 7rem;
+    text-align: center;
+}
+
+#eyes > input {
+    color: #ffffff00;
+    border: none;
+    outline: none;
+    background-color: #fff0;
+}
+
+#eyes > input:focus {
+    border: none;
+    outline: none;
+}
