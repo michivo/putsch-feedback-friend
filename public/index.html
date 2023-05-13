@@ -177,7 +177,21 @@
                     }, 5000);
                     scanInput.focus();
                 }, 5000);
-                scanInput.focus();
+                try {
+                    fetch('https://putsch-event-hub.uc.r.appspot.com/api/v1/events/feedback-friend', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ 'playerId': playerId }),
+                    });
+                }
+                catch(error) {
+                    console.error('Error sending request: ');
+                    console.error(error);
+                }
+                
             }
             scanInput.value = '';
             scanInput.focus();
@@ -230,7 +244,10 @@
 
         const updateStats = (stats) => {
             for (let i = 1; i < 31; i++) {
-                const stat = stats.find(s => s.playerId === `P${i}`);
+                const stat = stats.find(s => s.id === `P${i}`);
+                if (!stat) {
+                    continue;
+                }
                 const stack = document.getElementById(`stack${i}`);
                 const feedbackCount = stat ? stat.feedbackCount : 0;
                 while (stack.firstChild) {
@@ -247,17 +264,16 @@
         const firestore = getFirestore(app);
 
         const feedbackStats = [];
-        const querySnapshot = await getDocs(collection(firestore, 'feedbackFriend'));
+        const querySnapshot = await getDocs(collection(firestore, 'players'));
         querySnapshot.forEach((doc) => {
             const feedback = doc.data();
             feedbackStats.push(feedback);
         });
         updateStats(feedbackStats);
 
-        onSnapshot(collection(firestore, 'feedbackFriend'), (data) => {
+        onSnapshot(collection(firestore, 'players'), (data) => {
             const feedbackStats = [];
             data.docs.forEach((doc) => {
-                console.log(doc);
                 const feedback = doc.data();
                 feedbackStats.push(feedback);
             });
