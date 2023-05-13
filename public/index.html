@@ -3,8 +3,8 @@
 
 <head>
     <title>Putsch Feedbackfreund</title>
-    <link rel="stylesheet" type="text/css" href="./style.css">
-    <link rel="stylesheet" type="text/css" href="./blink.css">
+    <link rel="stylesheet" type="text/css" href="./assets/styles/style.css">
+    <link rel="stylesheet" type="text/css" href="./assets/styles/blink.css">
 </head>
 
 <body>
@@ -132,17 +132,7 @@
             </div>
         </div>
         <div id="eyes">
-            <div class="eye">
-                <div class="upper-pupil pupil"></div>
-                <div class="iris moving"></div>
-                <div class="lower-pupil pupil"></div>
-            </div>
-            <div class="eye">
-                <div class="upper-pupil pupil"></div>
-                <div class="iris moving"></div>
-                <div class="lower-pupil pupil"></div>
-            </div>
-            <input oninput="onScan()" onfocusout="refocus()" type="text" id="scanInput">
+            <img id="face" src="./assets/images/01_Basisblick.gif" alt="" width="3248" height="2362">
         </div>
         <div id="messages">
             Scanne dich!
@@ -152,6 +142,8 @@
     <script>
         let timer;
         let updateTimer;
+        let resetTimer;
+        let scannedInput = '';
 
         function debounce(func, timeout = 1000) {
             return (...args) => {
@@ -161,56 +153,32 @@
         }
 
         function updateMessage() {
-            const scanInput = document.getElementById('scanInput');
-            const playerId = scanInput.value;
+            const playerId = scannedInput;
             if (playerId) {
                 if (updateTimer) {
                     clearTimeout(updateTimer);
                 }
+                if (resetTimer) {
+                    clearTimeout(resetTimer);
+                }
                 toggleAnimations();
                 const messages = document.getElementById('messages');
-                messages.innerText = `Hallo ${playerId}!`;
+                messages.innerText = `Hallo ${playerId}! Vielen Dank - wirf nun dein Feedback ein!`;
                 updateTimer = setTimeout(() => {
-                    messages.innerText = 'Vielen Dank für dein Feedback!';
+                    messages.innerText = 'Nimm dir ein Dankeschön!';
                     updateTimer = setTimeout(() => {
                         messages.innerText = 'Scanne dich!';
                     }, 5000);
-                    scanInput.focus();
                 }, 5000);
-                scanInput.focus();
             }
-            scanInput.value = '';
-            scanInput.focus();
-        }
-
-        function refocus() {
-            const scanInput = document.getElementById('scanInput');
-            scanInput.focus();
-        }
-
-        function onScan() {
-            console.log(document.getElementById('scanInput').value);
-            debounce(() => updateMessage())();
+            scannedInput = '';
         }
 
         function toggleAnimations() {
-            toggleClasses('pupil', 'blinking');
-            toggleClasses('iris', 'moving');
+            document.getElementById('face').setAttribute('src', `./assets/images/02_Blick_unten2.gif`);
             setTimeout(() => {
-                toggleClasses('iris', 'moving');
+                document.getElementById('face').setAttribute('src', `./assets/images/01_Basisblick.gif`);
             }, 8000);
-        }
-
-        function toggleClasses(targetClass, toggleClass) {
-            const elements = document.getElementsByClassName(targetClass);
-            for (const element of elements) {
-                if (element.classList.contains(toggleClass)) {
-                    element.classList.remove(toggleClass);
-                }
-                else {
-                    element.classList.add(toggleClass);
-                }
-            }
         }
     </script>
 
@@ -240,7 +208,6 @@
                     stack.appendChild(document.createElement('span'));
                 }
             }
-            document.getElementById('scanInput').focus();
         }
 
         const app = initializeApp(firebaseConfig);
@@ -264,7 +231,15 @@
             updateStats(feedbackStats);
         });
 
-        document.getElementById('scanInput').focus();
+        console.log('Ready!');
+
+        document.addEventListener('keydown', function (event) {
+            if ((event.key >= "0" && event.key <= "9") || event.key === 'p' || event.key === 'P') {
+                scannedInput += event.key;
+                console.log(`Scanned input: ${scannedInput}`);
+                debounce(() => updateMessage())();
+            }
+        });
     </script>
 </body>
 
