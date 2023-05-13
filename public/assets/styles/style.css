@@ -51,19 +51,21 @@ div.container {
 }
 
 #messages {
-    height: 15%;
-    font-size: 7rem;
+    height: 10%;
+    font-size: 4.5rem;
     text-align: center;
 }
 
-#eyes > input {
+#messages1 > input {
     color: #ffffff00;
     border: none;
     outline: none;
     background-color: #fff0;
+    width: 1px;
+    height: 1px;
 }
 
-#eyes > input:focus {
+#messages1 > input:focus {
     border: none;
     outline: none;
 }

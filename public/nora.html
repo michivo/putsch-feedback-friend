@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <title>Nora Emotionen</title>
+    <link rel="stylesheet" type="text/css" href="./assets/styles/nora.css">
+</head>
+
+<body>
+    <div class="container">
+        <img id="face" src="./assets/images/01Basisblick.gif" alt="" width="3248" height="2362">
+    </div>
+
+    <script>
+        const images = [
+            '00_Cute2.gif',
+            '01Basisblick.gif',
+            '02_Basis_rechts2.gif', 
+            '03_Basis_links2.gif', 
+            '04_Basis_unten2.gif', 
+            '05_Worried2.gif', 
+            '06_Verdacht2.gif', 
+            '07_Angry2.gif', 
+            '08_Help2.gif', 
+            '09_Scared2.gif'
+        ];
+
+        function setImage(index) {
+            document.getElementById('face').setAttribute('src', `./assets/images/${images[index]}`);
+        }
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key >= "0" && event.key <= "9") {
+                const index = parseInt(event.key);
+                if (index >= 0) {
+                    setImage(index);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
