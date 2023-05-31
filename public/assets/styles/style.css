@@ -6,14 +6,18 @@ body {
 }
 
 div.container {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template:
+        "header" 7vh
+        "body" 86vh
+        "footer" 7vh / 100%;
+    overflow: hidden;
 }
 
 #players {
-    height: 15%;
+    height: 100%;
     border-bottom: 2px solid #333;
     display: flex;
     flex-direction: row;
@@ -27,14 +31,15 @@ div.container {
 }
 
 .label {
-    font-size: 1.7vw;
+    font-size: 1.5vw;
     text-align: center;
     border-top: 1px solid #888;
+    line-height: 1.5vw;
 }
 
 .stack {
     height: 70%;
-    font-size: 1.7vw;
+    font-size: 1.5vw;
     padding-left: .5rem;
     padding-right: .5rem;
     padding-bottom: .1rem;
@@ -45,14 +50,14 @@ div.container {
 
 .stack > span {
     border-bottom: 3px solid #333;
-    height: 3px;
+    height: 2px;
     display: block;
     border-radius: 1px;
 }
 
 #messages {
-    height: 10%;
-    font-size: 7vh;
+    border-top: 1px solid gray;
+    font-size: 6vh;
     text-align: center;
 }
 
@@ -68,4 +73,22 @@ div.container {
 #messages1 > input:focus {
     border: none;
     outline: none;
+}
+
+#eyes {
+	width: 100vw;
+    height: 100%;
+	display: flex;
+	justify-content: center;
+    justify-self: center;
+    align-self: center;
+	align-items: center;
+    border: none;
+}
+
+#face {
+    width: auto;
+    height: calc(100% - 6vh);
+    padding-bottom: 3vh;
+	padding-top: 3vh;
 }
