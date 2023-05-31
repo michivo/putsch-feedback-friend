@@ -249,7 +249,10 @@
         console.log('Ready!');
 
         document.addEventListener('keydown', function (event) {
-            if ((event.key >= "0" && event.key <= "9") || event.key === 'p' || event.key === 'P') {
+            if(event.key === 'p' || event.key === 'P') {
+                scannedInput = 'P';
+            }
+            else if ((event.key >= "0" && event.key <= "9") && scannedInput && scannedInput.charAt(0) === 'P') {
                 scannedInput += event.key;
                 console.log(`Scanned input: ${scannedInput}`);
                 debounce(() => updateMessage())();
