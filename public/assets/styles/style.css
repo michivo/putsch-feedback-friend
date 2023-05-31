@@ -27,14 +27,14 @@ div.container {
 }
 
 .label {
-    font-size: 2rem;
+    font-size: 1.7vw;
     text-align: center;
     border-top: 1px solid #888;
 }
 
 .stack {
     height: 70%;
-    font-size: 2rem;
+    font-size: 1.7vw;
     padding-left: .5rem;
     padding-right: .5rem;
     padding-bottom: .1rem;
@@ -52,7 +52,7 @@ div.container {
 
 #messages {
     height: 10%;
-    font-size: 4.5rem;
+    font-size: 7vh;
     text-align: center;
 }
 
